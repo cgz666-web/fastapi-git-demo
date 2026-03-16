@@ -1,0 +1,396 @@
+<template>
+  <view class="container">
+    <!-- 顶部标题栏 -->
+
+    <!-- 搜索区域 -->
+    <view class="search-container">
+      <view class="search-input-wrapper">
+        <input type="text" placeholder="搜索商家或餐品" class="search-input" />
+      </view>
+      <button class="search-button">搜索</button>
+    </view>
+
+    <!-- 轮播图区域 -->
+    <swiper 
+      class="banner-swiper" 
+      indicator-dots 
+      autoplay 
+      interval="3000" 
+      circular
+      :indicator-active-color="'#ff6c37'"
+    >
+      <swiper-item v-for="(item, index) in bannerList" :key="item.id">
+        <view class="banner-item">
+          <image :src="item.img" mode="aspectFill" class="banner-image" />
+          <view class="banner-content">
+            <text class="banner-title">{{ item.title }}</text>
+            <text class="banner-desc">{{ item.desc }}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 分类导航区域 -->
+    <view class="category-section">
+      <view class="category-grid">
+        <view class="category-item" v-for="(item, index) in categoryList" :key="item.id">
+          <image :src="item.icon" mode="aspectFill" class="category-icon"></image>
+          <text class="category-name">{{ item.name }}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商家推荐区域 -->
+    <view class="shop-section">
+      <view class="shop-card">
+        <!-- 调整标签的父容器定位，确保标签相对头像容器定位 -->
+        <view class="shop-avatar-wrapper">
+          <view class="shop-tag">满30减10</view>
+          <image src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=750&h=300&fit=crop" class="shop-avatar" mode="aspectFill"/>
+        </view>
+        
+        <view class="shop-info">
+          <view class="shop-header">
+            <text class="shop-name">幸福餐厅</text>
+            <text class="shop-score">4.8</text>
+          </view>
+          
+          <view class="shop-meta">
+            <text>月售1258</text>
+            <text class="delivery-tag">配送快</text>
+          </view>
+          
+          <view class="shop-price">
+            <text>起售¥15</text>
+            <text>人均¥45</text>
+          </view>
+          
+          <view class="shop-location">
+            <text>1.2km</text>
+            <text>25-35分钟</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部导航栏 -->
+    <view class="tabbar">
+      <view class="tabbar-item active">
+        <text class="tabbar-icon">🏠</text>
+        <text class="tabbar-label">首页</text>
+      </view>
+      <view class="tabbar-item">
+        <text class="tabbar-icon">🛒</text>
+        <text class="tabbar-label">购物车</text>
+      </view>
+      <view class="tabbar-item">
+        <text class="tabbar-icon">👤</text>
+        <text class="tabbar-label">个人中心</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  name: 'OrderFood',
+  data() {
+    return {
+      // 轮播图数据
+      bannerList: [
+        {
+          id: '1',
+          img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=750&h=300&fit=crop',
+          title: '新用户专享',
+          desc: '首单立减20元'
+        },
+        {
+          id: '2',
+          img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=750&h=300&fit=crop',
+          title: '美食盛宴',
+          desc: '全场满50减15'
+        },
+        {
+          id: '3',
+          img: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=750&h=300&fit=crop',
+          title: '周末特惠',
+          desc: '周六周日全场8折'
+        }
+      ],
+      // 商品分类数据
+      categoryList: [
+        { id: '1', name: '美食', icon: 'https://images.unsplash.com/photo-1495195129352-aeb325a55b65?w=100&h=100&fit=crop' },
+        { id: '2', name: '水果', icon: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=100&h=100&fit=crop' },
+        { id: '3', name: '蔬菜', icon: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop' },
+        { id: '4', name: '零食', icon: 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=100&h=100&fit=crop' },
+        { id: '5', name: '饮料', icon: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=100&h=100&fit=crop' },
+        { id: '6', name: '外卖', icon: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=100&h=100&fit=crop' },
+        { id: '7', name: '生鲜', icon: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=100&h=100&fit=crop' },
+        { id: '8', name: '超市', icon: 'https://images.unsplash.com/photo-1620121692029-d088224ddc74?w=100&h=100&fit=crop' }
+      ]
+    }
+  }
+}
+</script>
+
+<style scoped>
+/* 全局容器样式 */
+.container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 120rpx; /* 底部导航栏预留空间 */
+}
+
+/* 顶部标题 */
+.page-header {
+  background-color: #ffffff;
+  text-align: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* 搜索区域 */
+.search-container {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 15rpx;
+  background-color: #ffffff;
+}
+
+.search-input-wrapper {
+  flex: 1;
+  background-color: #f5f5f5;
+  border-radius: 50rpx;
+  padding: 15rpx 25rpx;
+  margin-right: 15rpx;
+}
+
+.search-input {
+  width: 100%;
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.search-button {
+  background-color: #ff6c37;
+  color: #ffffff;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  padding: 2rpx 30rpx;
+  border: none;
+}
+
+/* 轮播图区域 */
+.banner-swiper {
+  width: 100%;
+  height: 300rpx;
+  margin-bottom: 20rpx;
+}
+
+.banner-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+}
+
+.banner-content {
+  position: absolute;
+  left: 30rpx;
+  bottom: 30rpx;
+  color: #ffffff;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.3);
+}
+
+.banner-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.banner-desc {
+  font-size: 26rpx;
+}
+
+/* 分类区域 */
+.category-section {
+  background-color: #ffffff;
+  padding: 30rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.category-item {
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25rpx;
+}
+
+.category-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-bottom: 15rpx;
+}
+
+.category-name {
+  font-size: 26rpx;
+  color: #333333;
+}
+
+/* 商家区域 - 重点修改部分 */
+.shop-section {
+  background-color: #ffffff;
+  padding: 20rpx;
+}
+
+.shop-card {
+  display: flex;
+}
+
+/* 新增头像容器，用于标签的相对定位 */
+.shop-avatar-wrapper {
+  position: relative; /* 作为shop-tag的定位参考 */
+  margin-right: 20rpx;
+}
+
+.shop-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #ff4d4f;
+  color: #ffffff;
+  font-size: 22rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 0 0 10rpx 0;
+  z-index: 10; /* 提高层级，确保不被图片覆盖 */
+}
+
+.shop-avatar {
+  width: 200rpx;
+  height: 150rpx;
+  border-radius: 10rpx;
+}
+
+.shop-info {
+  flex: 1;
+}
+
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.shop-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.shop-score {
+  font-size: 28rpx;
+  color: #ff9a3c;
+  font-weight: 600;
+}
+
+.shop-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.shop-meta text {
+  font-size: 24rpx;
+  color: #999999;
+  margin-right: 15rpx;
+}
+
+.delivery-tag {
+  background-color: #fff5e8;
+  color: #ff9a3c;
+  padding: 2rpx 8rpx;
+  border-radius: 4rpx;
+  font-size: 22rpx;
+}
+
+.shop-price {
+  display: flex;
+  margin-bottom: 10rpx;
+}
+
+.shop-price text:first-child {
+  font-size: 26rpx;
+  color: #ff6c37;
+  margin-right: 20rpx;
+}
+
+.shop-price text:last-child {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.shop-location {
+  display: flex;
+}
+
+.shop-location text {
+  font-size: 24rpx;
+  color: #999999;
+  margin-right: 150rpx;
+}
+
+/* 底部导航栏 */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1rpx solid #eaeaea;
+  z-index: 999;
+}
+
+.tabbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tabbar-item.active .tabbar-label {
+  color: #ff6c37;
+}
+
+.tabbar-icon {
+  font-size: 40rpx;
+  margin-bottom: 5rpx;
+}
+
+.tabbar-label {
+  font-size: 24rpx;
+  color: #666666;
+}
+</style>
